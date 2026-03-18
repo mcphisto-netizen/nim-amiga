@@ -1,0 +1,37 @@
+# Nim cache
+nimcache/
+
+# Build outputs
+*.o
+*.s
+*.hunk
+*.exe
+*.map
+*.lst
+program
+hola
+test_*
+
+# Amiga/emulator files
+*.adf
+*.rom
+hd0/
+floppy/
+fsuae_log.txt
+serial_output.log
+
+# Build directories
+build/
+dist/
+bin/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
