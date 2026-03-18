@@ -1,9 +1,3 @@
-
----
-
-## 📄 File 3: `CONTRIBUTING.md` (How Others Can Help)
-
-```md
 # Contributing to Nim → Amiga 500
 
 Thank you for wanting to help! 🙌
