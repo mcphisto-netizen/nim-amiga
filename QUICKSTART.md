@@ -1,9 +1,3 @@
-
----
-
-## 📄 File 2: `QUICKSTART.md` (For First-Time Users)
-
-```md
 # Quick Start: Run Your First Nim Program on Amiga 500
 
 ## What you need
@@ -17,6 +11,6 @@
 
 ### 1. Clone this repo
 
-```bash
-git clone https://github.com/YOUR_USERNAME/nim-amiga
+
+git clone https://github.com/mcphisto-netizen/nim-amiga
 cd nim-amiga
