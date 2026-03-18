@@ -1,6 +1,6 @@
-# NimString runtime mínimo (sin GC)
+# NimString runtime minimo (sin GC)
 {.deadCodeElim: on.}
-{.inline: on.}
+{.push inline.}
 
 type
   NI8* = uint8
@@ -11,16 +11,14 @@ type
     len*: NI32
     data*: ptr NI8
 
-# --- memory hooks ---
 proc alloc*(size: int): pointer {.importc: "nim_alloc".}
 proc dealloc*(p: pointer; size: int) {.importc: "nim_dealloc".}
 
-# --- ops ---
-proc strlen*(s: ptr NimString): NI32 {.inline.} =
+proc strlen*(s: ptr NimString): NI32 =
   if s == nil: return 0
   result = s.len
 
-proc charAt*(s: ptr NimString; i: NI32): NI8 {.inline.} =
+proc charAt*(s: ptr NimString; i: NI32): NI8 =
   if s == nil or i >= s.len: return 0
   result = s.data[i]
 
@@ -55,3 +53,5 @@ proc strcat*(a, b: ptr NimString): ptr NimString =
     mem.data[a.len + i] = b.data[i]
 
   result = mem
+
+{.pop.}
