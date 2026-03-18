@@ -46,7 +46,7 @@ SIZE=$(wc -c < "$OUT" | tr -d ' ')
 echo ">> Result: $OUT ($SIZE bytes)"
 
 if [ "$SIZE" -gt 409600 ]; then
-    echo "⚠️  Warning: Binary exceeds 400 KB (may not fit in Chip RAM)"
+    echo "Warning: Binary exceeds 400 KB (may not fit in Chip RAM)"
 fi
 
 echo "✅ Done. Transfer '$OUT' to your Amiga to run."
