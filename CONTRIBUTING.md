@@ -23,7 +23,7 @@ You can contribute by:
 Great! Here's where to start:
 
 ### Good first issues
-Look for issues labeled [`good first issue`](https://github.com/YOUR_USERNAME/nim-amiga/issues?q=label%3A%22good+first+issue%22)
+Look for issues labeled [`good first issue`](https://github.com/mcphisto-netizen/nim-amiga/issues?q=label%3A%22good+first+issue%22)
 
 ### Areas that need help
 - 📚 More example programs (`examples/` folder)
@@ -39,7 +39,7 @@ Look for issues labeled [`good first issue`](https://github.com/YOUR_USERNAME/ni
 
 ## 🗣️ Questions or ideas?
 
-- Open a [Discussion](https://github.com/YOUR_USERNAME/nim-amiga/discussions)
+- Open a [Discussion](https://github.com/mcphisto-netizen/nim-amiga/discussions)
 - Join the conversation in existing issues
 - Be kind — we're all learning together ❤️
 
