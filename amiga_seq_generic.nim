@@ -1,6 +1,6 @@
-# seq[T] genérico mínimo (sin GC)
+# seq[T] generico minimo (sin GC)
 {.deadCodeElim: on.}
-{.inline: on.}
+{.push inline.}
 
 type
   NI32* = uint32
@@ -11,11 +11,9 @@ type
     cap*: NI32
     data*: ptr T
 
-# --- memory hooks ---
 proc alloc*(size: int): pointer {.importc: "nim_alloc".}
 proc dealloc*(p: pointer; size: int) {.importc: "nim_dealloc".}
 
-# --- helpers ---
 proc newSeq*[T](capacity: NI32 = 4): ptr NimSeq[T] =
   let headerSize = 12'u32
   let es = sizeof(T)
@@ -45,7 +43,7 @@ proc push*[T](s: var ptr NimSeq[T]; v: T) =
     inc s.len
     return
 
-  let newCap = 
+  let newCap =
     if s.cap > 0x7FFFFFFFu32 div 2: s.cap + 1024'u32
     else: s.cap * 2
 
@@ -81,3 +79,5 @@ proc freeSeq*[T](s: ptr NimSeq[T]) =
     let es = sizeof(T)
     let total = 12'u32 + (s.cap * NI32(es))
     dealloc(cast[pointer](s), int(total))
+
+{.pop.}
