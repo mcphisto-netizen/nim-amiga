@@ -1,34 +1,45 @@
-#define ALIGN2 __attribute__((aligned(2)))
-#include <exec/types.h>
+# Exception handling minimo (setjmp/longjmp)
+{.deadCodeElim: on.}
+{.push inline.}
 
-typedef unsigned long jmp_buf[20];
+type
+  NI32* = uint32
+  JmpBuf* = array[20, NI32]
+  PBuf* = ptr JmpBuf
 
-unsigned long nim_setjmp(jmp_buf* env) {
-    if (!env) return 0;
-    
-    asm volatile (
-        "movem.l d2-d7/a2-a6,(%0)\n\t"
-        "move.l %sp,28(%0)\n\t"
-        "move.l (%sp),32(%0)\n\t"
-        :
-        : "a"(env)
-        : "memory"
-    );
-    
-    return 0;
-}
+var gEnvStack*: array[16, PBuf]
+var gEnvTop*: int = 0
 
-void nim_longjmp(jmp_buf* env, unsigned long val) {
-    if (!env) return;
-    
-    asm volatile (
-        "movem.l (%0),d2-d7/a2-a6\n\t"
-        "move.l 28(%0),%sp\n\t"
-        "move.l 32(%0),-(%sp)\n\t"
-        "move.l %1,d0\n\t"
-        "rts\n\t"
-        :
-        : "a"(env), "d"(val)
-        : "memory", "a7"
-    );
-}
+proc pushEnv*(env: PBuf) =
+  if gEnvTop < 16:
+    gEnvStack[gEnvTop] = env
+    inc gEnvTop
+
+proc popEnv*() =
+  if gEnvTop > 0:
+    dec gEnvTop
+
+proc currentEnv*(): PBuf =
+  if gEnvTop > 0:
+    result = gEnvStack[gEnvTop - 1]
+  else:
+    result = nil
+
+proc c_setjmp*(env: PBuf): NI32 {.importc: "nim_setjmp".}
+proc c_longjmp*(env: PBuf; val: NI32) {.importc: "nim_longjmp".}
+
+template try*(body: untyped, handler: untyped): untyped =
+  var env: JmpBuf
+  pushEnv(addr env)
+  if c_setjmp(addr env) == 0:
+    body
+  else:
+    handler
+  popEnv()
+
+proc throw*(code: NI32) =
+  let env = currentEnv()
+  if env != nil:
+    c_longjmp(env, if code == 0: 1 else: code)
+
+{.pop.}
