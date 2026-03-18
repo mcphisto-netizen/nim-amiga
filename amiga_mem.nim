@@ -1,12 +1,11 @@
 # Runtime de memoria Nim -> Exec.library (GC manual)
 {.deadCodeElim: on.}
-{.inline: on.}
+{.push inline.}
 
 type
   ULONG* = uint32
   APTR* = pointer
 
-# --- Exec bindings ---
 proc AllocMem*(size: ULONG; flags: ULONG): APTR
   {.importc: "AllocMem", cdecl.}
 
@@ -16,7 +15,6 @@ proc FreeMem*(mem: APTR; size: ULONG)
 const
   MEMF_ANY* = 0'u32
 
-# --- Nim hooks (system replacement) ---
 proc alloc*(size: int): pointer {.exportc: "nim_alloc".} =
   result = AllocMem(ULONG(size), MEMF_ANY)
 
@@ -31,3 +29,5 @@ proc alloc0*(size: int): pointer {.exportc: "nim_alloc0".} =
     for i in 0..<size:
       b[i] = 0
   result = p
+
+{.pop.}
