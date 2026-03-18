@@ -2,7 +2,6 @@
 
 > Write modern Nim code that runs on a Commodore Amiga 500 (1985)
 
-![Demo](screenshots/demo.png)
 
 ## ✨ Why does this exist?
 
@@ -14,7 +13,7 @@ This project brings **Nim** — a fast, expressive, Python-like language — to 
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/nim-amiga
+git clone https://github.com/mcphisto-netizen/nim-amiga
 cd nim-amiga
 
 # Build a test program
